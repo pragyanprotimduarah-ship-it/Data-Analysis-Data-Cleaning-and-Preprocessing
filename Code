@@ -1,0 +1,18 @@
+Here is the code
+
+
+import pandas as pd
+df = pd.read_csv('Amazon Sale Report.csv');
+print(df.info())
+df = df.drop(['index','Style','SKU','ASIN','promotion-ids','B2B','fulfilled-by','Unnamed: 22'], axis=1)
+df = df[df['Qty'] != 0]
+df = df.dropna(subset=['ship-country'])
+df = df.drop(['Sales Channel ','ship-service-level','currency'],axis = 1)
+df['ship-city'] = df['ship-city'].str.capitalize()
+df['ship-state'] = df['ship-state'].str.capitalize()
+df=df.dropna()
+df.columns = df.columns.str.lower()
+df.columns = df.columns.str.strip()
+df = df.drop(['courier status'],axis=1)
+df['ship-postal-code'] = df['ship-postal-code'].astype(int)
+df.to_csv("DA_Day_1.csv",index=False)
